@@ -1,0 +1,16 @@
+{
+  "manifest_version": 2,
+  "name": "Zonguru Ext",
+  "version": "0.1",
+  "description": "Amazon marketplace insights.",
+  "content_scripts": [ {
+    "matches": ["https://www.youtube.com/*"],
+    "js": ["./main.js"],
+    "css": ["./main.css"]
+  } ],
+  "icons": {
+    "16": "zonguru.png",
+    "48": "zonguru.png",
+    "128": "zonguru.png"
+  }
+}
