@@ -1,22 +1,37 @@
-const items = document.getElementById('s-results-list-atf').children
+const items = document.getElementById('s-results-list-atf').getElementsByTagName('li')
+const asins = Array.from(items).map(getAsinNumber)
 
-const items_data = Array.from(items).map(i => {
-  const rating = i.querySelector('.a-icon-star') && i.querySelector('.a-icon-star').innerText.split(' ')[0]
-  const ratings = i.querySelector(`[name]`).parentElement.querySelector('.a-link-normal').innerText
+function getAsinNumber(domNode) {
+  return domNode.dataset.asin
+}
 
-  return {
-    asin: i.dataset.asin,
-    rating: rating,
-    num_ratings: ratings
-  }
-})
+function getItemData(asins) {
+  let url = "https://localhost:3000/api/v1/items?"
+  const params = asins.map(asin => {
+    return `asins[]=${asin}&`
+  }).join('')
 
+  fetch((url + params), {
+    method: 'GET',
+    mode: 'cors',
+    // headers: new Headers({ 'Content-Type': 'json' }),
+    cache: 'default'
+  }).then(resp => resp.json())
+    .then(data => {
+      // debugger
+      return data
+    }).catch(err => {
+      console.log('error!')
+      console.log(err)
+    })
+}
 
 chrome.runtime.onMessage.addListener(
   function(message, sender, sendResponse) {
     switch(message.type) {
       case "getItems":
-        sendResponse(items_data);
+        // sendResponse(items_data);
+        getItemData(asins)
         break;
       default:
         console.error("Unrecognised message: ", message);
