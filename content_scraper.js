@@ -1,14 +1,10 @@
 let data
-let page_scraping = true
-const items = document.getElementById('s-results-list-atf').getElementsByTagName('li')
+let items = document.querySelectorAll('[data-asin]')
 let url = "https://localhost:3000/api/v1/items?"
-const asins = Array.from(items).map(getAsinNumber)
+let asins = Array.from(items).map(node => node.dataset.asin)
 let review_hash = makeScrapedReviewHash(asins)
-const params = asins.map(asin => `asins[]=${asin}&`).join('')
+let params = asins.map(asin => `asins[]=${asin}&`).join('')
 
-function getAsinNumber(domNode) {
-  return domNode.dataset.asin
-}
 
 function handleErrors(response) {
   if (!response.ok)
@@ -19,16 +15,17 @@ function handleErrors(response) {
 function makeScrapedReviewHash(asins) {
   let reviewHash = {}
   asins.map(asin => {
-    let spans = document.querySelectorAll(`[name=${asin}]`)
+    let upc = JSON.stringify(asin)
+    let spans = document.querySelectorAll(`[name=${upc}]`)
     if (spans.length > 0) {
       var x = spans[0]
       var rating = x.getElementsByClassName('a-icon-star')
       if (rating.length <= 0) {
         rating = x.getElementsByTagName('i')
       }
-      reviewHash[asin] = {}
-      reviewHash[asin].rating = rating[0].innerText.match(/[^\s]+/)[0]
-      reviewHash[asin].review_count = x.parentElement.children[1].innerText
+      reviewHash[upc] = {}
+      reviewHash[upc].rating = rating[0].innerText.match(/[^\s]+/)[0]
+      reviewHash[upc].review_count = x.parentElement.children[1].innerText
     }
   })
   return reviewHash

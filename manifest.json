@@ -5,7 +5,7 @@
   "description": "Amazon marketplace insights.",
   "content_scripts": [ {
     "matches": ["https://www.amazon.com/*"],
-    "js": ["./scraper.js"],
+    "js": ["./content_scraper.js"],
     "css": ["./main.css"],
     "run_at": "document_end"
   } ],
