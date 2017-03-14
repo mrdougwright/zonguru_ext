@@ -6,6 +6,7 @@
 .zgred {
   background-color: #d34d01;
   cursor: pointer;
+  font-size: 1.5em;
 }
 
 
@@ -19,4 +20,15 @@
 
 li.checkered:nth-child(even) {
   background-color: #ededed;
+}
+
+a.item-link > div.item-img {
+  display: none;
+}
+a.item-link:hover > div.item-img {
+  display: block;
+}
+div.item-img {
+  position: absolute;
+  left: 40%;
 }

@@ -7,6 +7,7 @@
   function scrapeAndGetData() {
     let items = Array.from(document.getElementById('main').querySelectorAll('[data-asin]'))
 
+    // let url = "https://localhost:3000/api/v1/items?"
     let url = "https://zonguruapi.herokuapp.com/api/v1/items?"
     let asins = items.map(node => node.dataset.asin)
     let review_hash = makeScrapedReviewHash(asins)
@@ -21,19 +22,19 @@
     }
 
     function makeScrapedReviewHash(asins) {
+      debugger
       let reviewHash = {}
       asins.map(asin => {
-        let upc = JSON.stringify(asin)
-        let spans = document.querySelectorAll(`[name=${upc}]`)
+        let spans = document.querySelectorAll(`[name=${asin}]`)
         if (spans.length > 0) {
           var x = spans[0]
           var rating = x.getElementsByClassName('a-icon-star')
           if (rating.length <= 0) {
             rating = x.getElementsByTagName('i')
           }
-          reviewHash[upc] = {}
-          reviewHash[upc].rating = rating[0].innerText.match(/[^\s]+/)[0]
-          reviewHash[upc].review_count = x.parentElement.children[1].innerText
+          reviewHash[asin] = {}
+          reviewHash[asin].rating = rating[0].innerText.match(/[^\s]+/)[0]
+          reviewHash[asin].review_count = x.parentElement.children[1].innerText
         }
       })
       return reviewHash
@@ -67,7 +68,10 @@
           var li = document.createElement('li');
           li.innerHTML = `
             <div class='dtc pa1 w-10'>${item.asin}</div>
-            <div class='dtc pa1 w-30'>${item.product_name}</div>
+            <a class='item-link' href='${item.item_url}' target='_blank'>
+              <div class='item-img pa2 bg-white br2 shadow-2'><img src='${item.image_url}' /></div>
+              <div class='dtc pa1 w-30'>${item.product_name}</div>
+            </a>
             <div class='dtc pa1 w-10 center'>${item.brand}</div>
             <div class='dtc pa1 w-10 center'>${item.price}</div>
             <div class='dtc pa1 w-10 center'>${item.category}</div>
@@ -132,13 +136,13 @@
   let tab_left  = document.createElement('div')
   let tab_right = document.createElement('div')
   tab_left.className = "fl w-80 pa2"
-  tab_right.className = "fl w-20 pa2 zgred"
-  tab_right.innerText = "Click me"
+  tab_right.className = "fl w-20 pa2 zgred white b bl bt br bw2 b--dark-gray"
+  tab_right.innerText = "ZONGURU"
   tab.appendChild(tab_left)
   tab.appendChild(tab_right)
 
   let product_list = document.createElement('div')
-  product_list.className = "hide white pr3 pb3 center h5"
+  product_list.className = "white pr3 pb3 center h-50"
 
   let header = createHeader()
   product_list.appendChild(header)
@@ -155,7 +159,7 @@
 
   let main = document.createElement('div')
 
-  main.className = "zmain white fixed right-0 bottom-0 center bl bt"
+  main.className = "zmain hide white fixed right-0 bottom-0 center bl bt h-50"
 	document.body.appendChild(tab);
   tab.appendChild(main)
   main.appendChild(h3)
@@ -165,13 +169,13 @@
 
 
   tab.addEventListener('click', function() {
-    let classes = Array.from(product_list.classList)
+    let classes = Array.from(main.classList)
     if (classes.includes('hide')) {
-      product_list.className = product_list.className.replace('hide', 'show')
+      main.className = main.className.replace('hide', 'show')
     } else if (classes.includes('show')) {
-      product_list.className = product_list.className.replace('show', 'hide')
+      main.className = main.className.replace('show', 'hide')
     } else {
-      product_list.className += 'hide'
+      main.className += ' hide'
     }
   })
 
