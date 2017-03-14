@@ -1,3 +1,22 @@
-.bgcolor {
-  background-color: #79ccd0;
+.zmain {
+  background-color: #d34d01;
+  width: 100%;
+  overflow: auto;
+}
+.zgred {
+  background-color: #d34d01;
+  cursor: pointer;
+}
+
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+li.checkered:nth-child(even) {
+  background-color: #ededed;
 }
