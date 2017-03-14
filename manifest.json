@@ -4,9 +4,9 @@
   "version": "0.1",
   "description": "Amazon marketplace insights.",
   "content_scripts": [ {
-    "matches": ["https://www.amazon.com/*"],
-    "js": ["./content_scraper.js"],
-    "css": ["./main.css"],
+    "matches": ["https://www.amazon.com/*", "https://smile.amazon.com/*"],
+    "js": ["content_scraper.js"],
+    "css": ["main.css", "tachyons.css"],
     "run_at": "document_end"
   } ],
   "icons": {
@@ -20,7 +20,7 @@
       "48": "zonguru.png",
       "128": "zonguru.png"
     },
-    "default_title": "Zonguru",
-    "default_popup": "popup.html"
-  }
+    "default_title": "Zonguru"
+  },
+  "permissions": ["tabs","webNavigation"]
 }
