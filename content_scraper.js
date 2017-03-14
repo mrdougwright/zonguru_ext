@@ -1,15 +1,18 @@
 ;(function() {
 
   var currentPage
+  var spinnerOpts = {lines: 11, length: 18, width: 8, radius: 32, scale: 1, corners: 1, color: '#000', opacity: 0.25, rotate: 0, direction: 1, speed: 1.2, trail: 49, fps: 20}
+
 
   function scrapeAndGetData() {
     let items = Array.from(document.getElementById('main').querySelectorAll('[data-asin]'))
 
-    let url = "https://localhost:3000/api/v1/items?"
+    let url = "https://zonguruapi.herokuapp.com/api/v1/items?"
     let asins = items.map(node => node.dataset.asin)
     let review_hash = makeScrapedReviewHash(asins)
     let params = asins.map(asin => `asins[]=${asin}&`).join('')
-
+    let ul = document.getElementById('zongitems')
+    new Spinner(spinnerOpts).spin(ul)
 
     function handleErrors(response) {
       if (!response.ok)
@@ -58,7 +61,6 @@
       })
       .then(data => {
         console.log('mapping over data...')
-        let ul = document.getElementById('zongitems')
         ul.innerHTML = ''
 
         data.map(item => {
@@ -153,6 +155,8 @@
   tab.appendChild(main)
   main.appendChild(h3)
   main.appendChild(product_list)
+
+  new Spinner(spinnerOpts).spin(ul)
 
 
   tab.addEventListener('click', function() {
