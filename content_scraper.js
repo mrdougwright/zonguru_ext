@@ -75,7 +75,7 @@
             <div class='dtc pa1 w-10 center'>${item.rating}</div>
             <div class='dtc pa1 w-10 center'>${item.review_count}</div>
           `;
-          li.className = "list bg-white checkered ph2 pv3 ba b--dotted"
+          li.className = "list bg-white checkered ph2 pv3 ba b--dotted dt dt--fixed"
           ul.appendChild(li)
         })
       }).catch(err => {
@@ -87,16 +87,19 @@
 
   function createHeader() {
     let header = document.createElement('div')
-    header.className = "list pa2 mh3 mt4 fixed bg-gray w-100"
+    header.className = "list pa2 mh3 mt4 fixed bg-gray w-100 dt"
 
+    let div0 = document.createElement('div')
+    div0.className = "fw8 dtc pl2 w-10"
+    div0.textContent = "ASIN"
     let div1 = document.createElement('div')
-    div1.className = "fw8 dtc pl1 w-10"
+    div1.className = "fw8 dtc pl1 w-30"
     div1.textContent = "Product Name"
     let div2 = document.createElement('div')
-    div2.className = "fw8 dtc pl1 w-30"
+    div2.className = "fw8 dtc pl1 w-10"
     div2.textContent = "Brand"
     let div3 = document.createElement('div')
-    div3.className = "fw8 dtc pl1 w-10"
+    div3.className = "fw8 dtc pl1 w3"
     div3.textContent = "Price"
     let div4 = document.createElement('div')
     div4.className = "fw8 dtc pl1 w-10"
@@ -111,12 +114,14 @@
     div7.className = "fw8 dtc pl1 w-10"
     div7.textContent = "Review Count"
 
+    header.appendChild(div0)
     header.appendChild(div1)
     header.appendChild(div2)
     header.appendChild(div3)
     header.appendChild(div4)
     header.appendChild(div5)
     header.appendChild(div6)
+    header.appendChild(div7)
 
     return header
   }
