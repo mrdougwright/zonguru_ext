@@ -1,7 +1,7 @@
 ;(function() {
 
   var currentPage
-  var spinnerOpts = {lines: 11, length: 18, width: 8, radius: 32, scale: 1, corners: 1, color: '#000', opacity: 0.25, rotate: 0, direction: 1, speed: 1.2, trail: 49, fps: 20}
+  var spinnerOpts = {lines: 15, length: 15, width: 5, radius: 25, scale: 1, corners: 1, color: '#000', opacity: 0.25, rotate: 0, direction: 1, speed: 1.2, trail: 49, fps: 20}
 
 
   function scrapeAndGetData() {
@@ -22,7 +22,6 @@
     }
 
     function makeScrapedReviewHash(asins) {
-      debugger
       let reviewHash = {}
       asins.map(asin => {
         let spans = document.querySelectorAll(`[name=${asin}]`)
@@ -67,19 +66,19 @@
         data.map(item => {
           var li = document.createElement('li');
           li.innerHTML = `
-            <div class='dtc pa1 w-10'>${item.asin}</div>
+            <div class='dib pa1 mr2'>${item.asin}</div>
             <a class='item-link' href='${item.item_url}' target='_blank'>
               <div class='item-img pa2 bg-white br2 shadow-2'><img src='${item.image_url}' /></div>
-              <div class='dtc pa1 w-30'>${item.product_name}</div>
+              <div class='dib pa1 w-40'>${item.product_name}</div>
             </a>
-            <div class='dtc pa1 w-10 center'>${item.brand}</div>
-            <div class='dtc pa1 w-10 center'>${item.price}</div>
-            <div class='dtc pa1 w-10 center'>${item.category}</div>
-            <div class='dtc pa1 w-10 center'>${item.rank}</div>
-            <div class='dtc pa1 w-10 center'>${item.rating}</div>
-            <div class='dtc pa1 w-10 center'>${item.review_count}</div>
+            <div class='dib pa1 w4 center'>${item.brand}</div>
+            <div class='dib pa1 w3 center'>${item.price}</div>
+            <div class='dib pa1 w4 center'>${item.category}</div>
+            <div class='dib pa1 w3 center'>${item.rank}</div>
+            <div class='dib pa1 w3 center'>${item.rating}</div>
+            <div class='dib pa1 center'>${item.review_count}</div>
           `;
-          li.className = "list bg-white checkered ph2 pv3 ba b--dotted dt dt--fixed"
+          li.className = "list bg-white checkered ph2 pv3 ba b--dotted"
           ul.appendChild(li)
         })
       }).catch(err => {
@@ -91,31 +90,31 @@
 
   function createHeader() {
     let header = document.createElement('div')
-    header.className = "list pa2 mh3 mt4 fixed bg-gray w-100 dt"
+    header.className = "list pa2 mh3 mt4 fixed bg-gray w-100"
 
     let div0 = document.createElement('div')
-    div0.className = "fw8 dtc pl2 w-10"
+    div0.className = "fw8 pl2 dib mr5"
     div0.textContent = "ASIN"
     let div1 = document.createElement('div')
-    div1.className = "fw8 dtc pl1 w-30"
+    div1.className = "fw8 pl1 dib w-40"
     div1.textContent = "Product Name"
     let div2 = document.createElement('div')
-    div2.className = "fw8 dtc pl1 w-10"
+    div2.className = "fw8 pl1 dib mr5"
     div2.textContent = "Brand"
     let div3 = document.createElement('div')
-    div3.className = "fw8 dtc pl1 w3"
+    div3.className = "fw8 pl1 dib w3"
     div3.textContent = "Price"
     let div4 = document.createElement('div')
-    div4.className = "fw8 dtc pl1 w-10"
+    div4.className = "fw8 pl1 dib w4"
     div4.textContent = "Category"
     let div5 = document.createElement('div')
-    div5.className = "fw8 dtc pl1 w-10"
+    div5.className = "fw8 pl1 dib w3"
     div5.textContent = "Rank"
     let div6 = document.createElement('div')
-    div6.className = "fw8 dtc pl1 w-10"
+    div6.className = "fw8 pl1 dib w3"
     div6.textContent = "Rating"
     let div7 = document.createElement('div')
-    div7.className = "fw8 dtc pl1 w-10"
+    div7.className = "fw8 pl1 dib w4"
     div7.textContent = "Review Count"
 
     header.appendChild(div0)
